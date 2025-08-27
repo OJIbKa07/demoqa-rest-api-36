@@ -1,9 +1,13 @@
 package pages;
 
 import api.DeleteBookApi;
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
+
+import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -13,9 +17,11 @@ public class ProfilePage {
 
     private SelenideElement
             usernameLabel = $("#userName-value"),
-            deleteButton = $("div.text-right.button.di button"),
-            modalWindow =  $("#closeSmallModal-ok"),
-            listMyBook = $(".rt-noData");
+            firstBookRow,
+            symbolBasket = $("#delete-record-undefined"),
+            modalConfirmDel = $("button#closeSmallModal-ok");
+    private ElementsCollection
+            bookRows= $$("div[role='row']");
 
 
     @Step("Проверяем успешность авторизации")
@@ -34,17 +40,17 @@ public class ProfilePage {
     }
 
     @Step("Удаляем книгу из корзины в UI")
-    public ProfilePage clickDeleteAllBooks() {
-        deleteButton.shouldBe(visible, enabled).click();
-        modalWindow.shouldBe(visible)
-                .click();
-        switchTo().alert().accept();
+    public ProfilePage clickDeleteAllBooks(String isbn) {
+        firstBookRow = bookRows.first();
+        firstBookRow.shouldBe(Condition.visible);
+        symbolBasket.shouldBe(Condition.visible).click();
+        modalConfirmDel.click();
 
         return this;
     }
 
-    public ProfilePage checkDeleteBook() {
-        listMyBook.shouldBe(visible);
+    public ProfilePage checkDeleteBook(String isbn) {
+        bookRows.shouldBe(CollectionCondition.empty);
 
         return this;
     }

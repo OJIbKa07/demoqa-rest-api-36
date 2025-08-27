@@ -9,7 +9,7 @@ import pages.ProfilePage;
 import static com.codeborne.selenide.logevents.SelenideLogger.step;
 import static tests.TestData.*;
 
-public class DemoqaTests extends TestBase {
+public class DemoqaTestsUI extends TestBase {
     ProfilePage profilePage = new ProfilePage();
     BooksPage bookPage = new BooksPage();
 
@@ -22,11 +22,14 @@ public class DemoqaTests extends TestBase {
         });
 
         step("Добавляем книгу в корзину", () -> {
-            bookPage.addBook(isbnOne);
+            bookPage.addBook(isbnTwo);
         });
 
-        step("Удаляем книгу № 1 из корзины", () -> {
-            profilePage.deleteBook(isbnOne);
+        step("Удаляем книгу из корзины", () -> {
+            profilePage
+                .checkAuthorization()
+                .clickDeleteAllBooks(isbnTwo)
+                .checkDeleteBook(isbnTwo);
         });
     }
 }
