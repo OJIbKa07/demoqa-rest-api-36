@@ -22,11 +22,11 @@ public class DemoqaTests extends TestBase {
         });
 
         step("Добавляем книгу в корзину", () -> {
-            bookPage.addBook();
+            bookPage.addBook(isbnOne);
         });
 
-        step("Удаляем книгу из корзины", () -> {
-            profilePage.deleteBook();
+        step("Удаляем книгу № 1 из корзины", () -> {
+            profilePage.deleteBook(isbnOne);
         });
     }
 }

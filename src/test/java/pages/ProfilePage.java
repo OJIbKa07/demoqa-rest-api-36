@@ -5,7 +5,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
-import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static tests.TestData.USERNAME;
 
@@ -26,17 +26,17 @@ public class ProfilePage {
         return this;
     }
 
-    @Step("Удаляем книгу из корзины по API")
-    public ProfilePage deleteBook() {
-        DeleteBookApi.deleteBookFromProfileTest();
+    @Step("Удаляем книги из корзины по API")
+    public ProfilePage deleteBook(String isbn) {
+        DeleteBookApi.deleteBookFromProfileTest(isbn);
 
         return this;
     }
 
     @Step("Удаляем книгу из корзины в UI")
     public ProfilePage clickDeleteAllBooks() {
-        deleteButton.click();
-        modalWindow.shouldBe(Condition.visible)
+        deleteButton.shouldBe(visible, enabled).click();
+        modalWindow.shouldBe(visible)
                 .click();
         switchTo().alert().accept();
 
@@ -44,7 +44,7 @@ public class ProfilePage {
     }
 
     public ProfilePage checkDeleteBook() {
-        listMyBook.shouldBe(Condition.visible);
+        listMyBook.shouldBe(visible);
 
         return this;
     }

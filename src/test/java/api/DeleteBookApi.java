@@ -7,11 +7,10 @@ import models.lobmok.DeleteBookRequestLombokModel;
 import static io.restassured.RestAssured.given;
 import static specs.RequestSpec.requestSpec;
 import static specs.ResponseSpec.responseSpec;
-import static tests.TestData.isbn;
 
 public class DeleteBookApi {
 
-    public static void deleteBookFromProfileTest() {
+    public static void deleteBookFromProfileTest(String isbn) {
         DeleteBookRequestLombokModel request = new DeleteBookRequestLombokModel(
                 LoginExtension.loginResponse.getUserID(),
                 isbn

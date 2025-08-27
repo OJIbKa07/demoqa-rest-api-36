@@ -10,11 +10,10 @@ import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static specs.RequestSpec.requestSpec;
 import static specs.ResponseSpec.responseSpec;
-import static tests.TestData.isbn;
 
 public class AddBookApi {
 
-    public static void addBookToProfileTest() {
+    public static void addBookToProfileTest(String isbn) {
         AddBookRequestLombokModel request = new AddBookRequestLombokModel(
                 LoginExtension.loginResponse.getUserID(),
                 Collections.singletonList(new AddBookRequestLombokModel.Isbn(isbn))

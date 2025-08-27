@@ -7,8 +7,7 @@ import pages.BooksPage;
 import pages.ProfilePage;
 
 import static com.codeborne.selenide.logevents.SelenideLogger.step;
-import static tests.TestData.PASSWORD;
-import static tests.TestData.USERNAME;
+import static tests.TestData.*;
 
 public class DeleteBookUI extends TestBase {
     ProfilePage profilePage = new ProfilePage();
@@ -23,7 +22,7 @@ public class DeleteBookUI extends TestBase {
         });
 
         step("Добавляем книгу в корзину", () -> {
-            bookPage.addBook();
+            bookPage.addBook(isbnTwo);
         });
 
         step("Удаляем книгу из корзины", () -> {
