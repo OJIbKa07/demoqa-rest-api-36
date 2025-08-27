@@ -23,7 +23,6 @@ public class LoginExtension implements BeforeEachCallback {
                 String username = annotation.username();
                 String password = annotation.password();
 
-                // DTO для запроса (лучше чем строка)
                 LoginRequest loginRequest = new LoginRequest(username, password);
 
                 Response response = io.restassured.RestAssured

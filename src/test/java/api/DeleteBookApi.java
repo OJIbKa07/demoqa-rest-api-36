@@ -2,6 +2,7 @@ package api;
 
 import helpers.LoginExtension;
 import io.restassured.response.Response;
+import models.lobmok.DeleteBookRequestLombokModel;
 
 import static io.restassured.RestAssured.given;
 import static specs.RequestSpec.requestSpec;
@@ -11,15 +12,14 @@ import static tests.TestData.isbn;
 public class DeleteBookApi {
 
     public static void deleteBookFromProfileTest() {
-        String requestBody = String.format(
-                "{ \"isbn\": \"%s\", \"userId\": \"%s\" }",
-                isbn,
-                LoginExtension.loginResponse.getUserID() // ✅ берём из Lombok модели
+        DeleteBookRequestLombokModel request = new DeleteBookRequestLombokModel(
+                LoginExtension.loginResponse.getUserID(),
+                isbn
         );
 
         Response response = given(requestSpec)
                 .header("Authorization", "Bearer " + LoginExtension.loginResponse.getToken())
-                .body(requestBody)
+                .body(request)
                 .when()
                 .delete("/BookStore/v1/Book")
                 .then()

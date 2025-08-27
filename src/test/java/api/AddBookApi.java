@@ -2,6 +2,9 @@ package api;
 
 import helpers.LoginExtension;
 import io.restassured.response.Response;
+import models.AddBookRequestLombokModel;
+
+import java.util.Collections;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,15 +15,14 @@ import static tests.TestData.isbn;
 public class AddBookApi {
 
     public static void addBookToProfileTest() {
-        String requestBody = String.format(
-                "{ \"userId\": \"%s\", \"collectionOfIsbns\": [ { \"isbn\": \"%s\" } ] }",
+        AddBookRequestLombokModel request = new AddBookRequestLombokModel(
                 LoginExtension.loginResponse.getUserID(),
-                isbn
+                Collections.singletonList(new AddBookRequestLombokModel.Isbn(isbn))
         );
 
         Response response = given(requestSpec)
                 .header("Authorization", "Bearer " + LoginExtension.loginResponse.getToken())
-                .body(requestBody)
+                .body(request)
                 .when()
                 .post("/BookStore/v1/Books")
                 .then()
