@@ -27,6 +27,7 @@ public class DemoqaTestsAPI extends TestBase {
 
         step("Удаляем книгу № 1 из корзины", () -> {
             profilePage.deleteBook(isbnOne);
+
         });
     }
 }
