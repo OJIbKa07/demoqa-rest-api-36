@@ -20,7 +20,6 @@ public class TestBase {
         Configuration.baseUrl = "https://demoqa.com";
         RestAssured.baseURI = "https://demoqa.com";
         Configuration.pageLoadStrategy = "eager";
-        Configuration.holdBrowserOpen = true;/*
         Configuration.browser =  System.getProperty ("browser","chrome");
         Configuration.browserVersion =  System.getProperty("browser_version", "127.0");
         Configuration.remote = "https://user1:1234@" + System.getProperty("selenoid_url","selenoid.autotests.cloud/wd/hub");
@@ -29,10 +28,10 @@ public class TestBase {
                 "enableVNC", true,
                 "enableVideo", true
         ));
-        Configuration.browserCapabilities = capabilities;*/
+        Configuration.browserCapabilities = capabilities;
     }
 
-    /*@BeforeEach
+    @BeforeEach
     void addListenerAndRuCookie() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
     }
@@ -44,5 +43,5 @@ public class TestBase {
         Attach.browserConsoleLogs();
         Attach.addVideo();
         Selenide.closeWebDriver();
-    }*/
+    }
 }
