@@ -16,9 +16,12 @@ public class DemoqaTestsAPI extends TestBase {
     @WithLogin(username = USERNAME, password = PASSWORD)
     @Test
     void deleteBookTest() {
-        step("Авторизация и проверка успешной авторизации", () -> {
+        step("Проверка успешной авторизации", () -> {
             AuthorizationApi.loginWithApi();
-            profilePage.checkAuthorization();
+            profilePage
+                    .openPage()
+                    .removeAds()
+                    .checkAuthorization();
         });
 
         step("Добавляем книгу в корзину", () -> {

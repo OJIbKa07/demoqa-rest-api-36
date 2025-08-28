@@ -16,9 +16,12 @@ public class DemoqaTestsUI extends TestBase {
     @WithLogin(username = USERNAME, password = PASSWORD)
     @Test
     void deleteBookTest() {
-        step("Авторизация и проверка успешной авторизации", () -> {
+        step("Проверка успешной авторизации", () -> {
             AuthorizationApi.loginWithApi();
-            profilePage.checkAuthorization();
+            profilePage
+                    .openPage()
+                    .removeAds()
+                    .checkAuthorization();
         });
 
         step("Добавляем книгу в корзину", () -> {
@@ -27,9 +30,9 @@ public class DemoqaTestsUI extends TestBase {
 
         step("Удаляем книгу из корзины", () -> {
             profilePage
-                .checkAuthorization()
-                .clickDeleteAllBooks(isbnTwo)
-                .checkDeleteBook(isbnTwo);
+                    .clickDeleteBook(bookTwoTitle)
+                    .closeConfirmationWindow()
+                    .checkDeleteBook();
         });
     }
 }

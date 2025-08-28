@@ -17,16 +17,25 @@ public class ProfilePage {
 
     private SelenideElement
             usernameLabel = $("#userName-value"),
-            firstBookRow,
-            symbolBasket = $("#delete-record-undefined"),
-            modalConfirmDel = $("button#closeSmallModal-ok");
-    private ElementsCollection
-            bookRows= $$("div[role='row']");
+            okButton = $("#closeSmallModal-ok");
 
+    private ElementsCollection
+            bookRows= $$("div[role='row']"),
+            bookNames = $$(".mr-2");
+
+    public String
+            deletedRow = ".rt-tr",
+            binIcon = "#delete-record-undefined";
+
+    @Step("Открываем страницу профиля")
+    public ProfilePage openPage() {
+        open("/profile");
+
+        return this;
+}
 
     @Step("Проверяем успешность авторизации")
     public ProfilePage checkAuthorization() {
-        open("/profile");
         $(usernameLabel).shouldHave(text(USERNAME));
 
         return this;
@@ -40,17 +49,29 @@ public class ProfilePage {
     }
 
     @Step("Удаляем книгу из корзины в UI")
-    public ProfilePage clickDeleteAllBooks(String isbn) {
-        firstBookRow = bookRows.first();
-        firstBookRow.shouldBe(Condition.visible);
-        symbolBasket.shouldBe(Condition.visible).click();
-        modalConfirmDel.click();
+    public ProfilePage clickDeleteBook(String deletedBookTitle) {
+        bookNames.findBy(text(deletedBookTitle)).closest(deletedRow).$(binIcon).click();
 
         return this;
     }
 
-    public ProfilePage checkDeleteBook(String isbn) {
+    @Step("Подтверждаем удаление книги")
+    public ProfilePage closeConfirmationWindow() {
+        okButton.click();
+
+        return this;
+    }
+
+    @Step("Проверяем факт удаления книги")
+    public ProfilePage checkDeleteBook() {
         bookRows.shouldBe(CollectionCondition.empty);
+
+        return this;
+    }
+
+    public ProfilePage removeAds() {
+        executeJavaScript("$('footer').remove();");
+        executeJavaScript("$('#fixedban').remove();");
 
         return this;
     }
