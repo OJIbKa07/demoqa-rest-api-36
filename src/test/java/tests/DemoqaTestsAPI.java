@@ -20,17 +20,17 @@ public class DemoqaTestsAPI extends TestBase {
             AuthorizationApi.loginWithApi();
             profilePage
                     .openPage()
-                    .removeAds()
                     .checkAuthorization();
         });
 
         step("Добавляем книгу в корзину", () -> {
-            bookPage.addBook(isbnOne);
+            bookPage
+                    .addBook(isbnOne);
         });
 
         step("Удаляем книгу № 1 из корзины", () -> {
-            profilePage.deleteBook(isbnOne);
-
+            profilePage
+                    .deleteBook(isbnOne);
         });
     }
 }

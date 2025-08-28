@@ -17,7 +17,8 @@ public class ProfilePage {
 
     private SelenideElement
             usernameLabel = $("#userName-value"),
-            okButton = $("#closeSmallModal-ok");
+            okButton = $("#closeSmallModal-ok"),
+            bookTable = $(".rt-tbody");
 
     private ElementsCollection
             bookRows= $$("div[role='row']"),
@@ -63,12 +64,13 @@ public class ProfilePage {
     }
 
     @Step("Проверяем факт удаления книги")
-    public ProfilePage checkDeleteBook() {
-        bookRows.shouldBe(CollectionCondition.empty);
+    public ProfilePage checkDeleteBook(String title) {
+        bookTable.shouldNotHave(text(title));
 
         return this;
     }
 
+    @Step("Убираем рекламу")
     public ProfilePage removeAds() {
         executeJavaScript("$('footer').remove();");
         executeJavaScript("$('#fixedban').remove();");

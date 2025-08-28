@@ -20,19 +20,23 @@ public class DemoqaTestsUI extends TestBase {
             AuthorizationApi.loginWithApi();
             profilePage
                     .openPage()
-                    .removeAds()
                     .checkAuthorization();
         });
 
         step("Добавляем книгу в корзину", () -> {
-            bookPage.addBook(isbnTwo);
+            bookPage
+                    .addBook(isbnTwo);
         });
 
         step("Удаляем книгу из корзины", () -> {
             profilePage
                     .clickDeleteBook(bookTwoTitle)
-                    .closeConfirmationWindow()
-                    .checkDeleteBook();
+                    .closeConfirmationWindow();
+        });
+
+        step("Проверяем, что книга удалена", () -> {
+            profilePage
+                    .checkDeleteBook(bookTwoTitle);
         });
     }
 }
