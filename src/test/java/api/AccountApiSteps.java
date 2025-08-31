@@ -3,10 +3,11 @@ package api;
 import helpers.LoginExtension;
 import org.openqa.selenium.Cookie;
 
+
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
-public class AuthorizationApi {
+public class AccountApiSteps {
 
     public static void loginWithApi() {
         if (LoginExtension.loginResponse == null

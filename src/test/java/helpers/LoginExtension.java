@@ -5,12 +5,12 @@ import models.LoginResponse;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.openqa.selenium.Cookie;
-import org.openqa.selenium.WebDriver;
 
+import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static io.restassured.RestAssured.given;
-import static java.sql.DriverManager.getDriver;
-import static specs.RequestSpec.requestSpec;
-import static specs.ResponseSpec.responseSpec;
+import static specs.BaseSpecs.requestSpec;
+import static specs.BaseSpecs.responseSpec;
 import static tests.TestData.*;
 
 
@@ -21,7 +21,9 @@ public class LoginExtension implements BeforeEachCallback {
     @Override
     public void beforeEach(ExtensionContext context) {
 
-        LoginRequest loginRequest = new LoginRequest(USERNAME, PASSWORD);
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUserName(USERNAME);
+        loginRequest.setPassword(PASSWORD);
 
         Response response = given()
                 .spec(requestSpec)
@@ -37,8 +39,8 @@ public class LoginExtension implements BeforeEachCallback {
         loginResponse.setExpires(response.jsonPath().getString("expires"));
         loginResponse.setStatusCode(response.getStatusCode());
 
-        WebDriver driver = getDriver();
-        driver.manage().addCookie(new Cookie("token", loginResponse.getToken()));
+        open("/favicon.ico");
+        getWebDriver().manage().addCookie(new Cookie("token", loginResponse.getToken()));
     }
 }
 

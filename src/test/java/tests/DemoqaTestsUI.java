@@ -1,6 +1,6 @@
 package tests;
 
-import api.AuthorizationApi;
+import api.AccountApiSteps;
 import helpers.WithLogin;
 import org.junit.jupiter.api.Test;
 import pages.BooksPage;
@@ -9,15 +9,16 @@ import pages.ProfilePage;
 import static com.codeborne.selenide.logevents.SelenideLogger.step;
 import static tests.TestData.*;
 
+
 public class DemoqaTestsUI extends TestBase {
     ProfilePage profilePage = new ProfilePage();
     BooksPage bookPage = new BooksPage();
 
-    @WithLogin(username = USERNAME, password = PASSWORD)
+    @WithLogin
     @Test
     void deleteBookTest() {
         step("Проверка успешной авторизации", () -> {
-            AuthorizationApi.loginWithApi();
+            AccountApiSteps.loginWithApi();
             profilePage
                     .openPage()
                     .checkAuthorization();
