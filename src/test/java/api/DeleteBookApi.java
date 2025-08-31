@@ -2,7 +2,7 @@ package api;
 
 import helpers.LoginExtension;
 import io.restassured.response.Response;
-import models.lobmok.DeleteBookRequestLombokModel;
+import models.DeleteBookRequest;
 
 import static io.restassured.RestAssured.given;
 import static specs.RequestSpec.requestSpec;
@@ -11,7 +11,7 @@ import static specs.ResponseSpec.responseSpec;
 public class DeleteBookApi {
 
     public static void deleteBookFromProfileTest(String isbn) {
-        DeleteBookRequestLombokModel request = new DeleteBookRequestLombokModel(
+        DeleteBookRequest request = new DeleteBookRequest(
                 LoginExtension.loginResponse.getUserID(),
                 isbn
         );

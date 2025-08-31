@@ -2,7 +2,7 @@ package api;
 
 import helpers.LoginExtension;
 import io.restassured.response.Response;
-import models.AddBookRequestLombokModel;
+import models.AddBookRequest;
 
 import java.util.Collections;
 
@@ -14,9 +14,9 @@ import static specs.ResponseSpec.responseSpec;
 public class AddBookApi {
 
     public static void addBookToProfileTest(String isbn) {
-        AddBookRequestLombokModel request = new AddBookRequestLombokModel(
+        AddBookRequest request = new AddBookRequest(
                 LoginExtension.loginResponse.getUserID(),
-                Collections.singletonList(new AddBookRequestLombokModel.Isbn(isbn))
+                Collections.singletonList(new AddBookRequest.Isbn(isbn))
         );
 
         Response response = given(requestSpec)

@@ -9,11 +9,12 @@ import pages.ProfilePage;
 import static com.codeborne.selenide.logevents.SelenideLogger.step;
 import static tests.TestData.*;
 
+@WithLogin
 public class DemoqaTestsAPI extends TestBase {
     ProfilePage profilePage = new ProfilePage();
     BooksPage bookPage = new BooksPage();
 
-    @WithLogin(username = USERNAME, password = PASSWORD)
+
     @Test
     void deleteBookTest() {
         step("Проверка успешной авторизации", () -> {

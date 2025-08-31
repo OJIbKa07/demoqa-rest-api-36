@@ -7,9 +7,6 @@ import java.lang.annotation.*;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-@Test
 @ExtendWith(LoginExtension.class)
 public @interface WithLogin {
-    String username();
-    String password();
 }

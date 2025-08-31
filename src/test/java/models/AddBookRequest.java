@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class AddBookRequestLombokModel {
+public class AddBookRequest {
 
     private String userId;
     private List<Isbn> collectionOfIsbns;

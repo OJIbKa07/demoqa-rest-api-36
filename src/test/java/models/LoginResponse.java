@@ -1,9 +1,9 @@
-package models.lobmok;
+package models;
 
 import lombok.Data;
 
 @Data
-public class LoginResponseLombokModel {
+public class LoginResponse {
     private String token;
     private String userID;
     private String expires;
