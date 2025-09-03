@@ -4,6 +4,7 @@ import helpers.LoginExtension;
 import io.restassured.response.Response;
 import models.AddBookRequest;
 import models.DeleteBookRequest;
+import models.LoginResponse;
 
 import java.util.Collections;
 
@@ -14,14 +15,14 @@ import static specs.BaseSpecs.responseSpec;
 
 public class BookStoreApiSteps {
 
-    public static void addBookToProfile(String isbn) {
+    public static void addBookToProfile(LoginResponse loginResponse, String isbn) {
         AddBookRequest request = new AddBookRequest(
-                LoginExtension.loginResponse.getUserID(),
+                loginResponse.getUserID(),
                 Collections.singletonList(new AddBookRequest.Isbn(isbn))
         );
 
         Response response = given(requestSpec)
-                .header("Authorization", "Bearer " + LoginExtension.loginResponse.getToken())
+                .header("Authorization", "Bearer " + loginResponse.getToken())
                 .body(request)
                 .when()
                 .post("/BookStore/v1/Books")
@@ -33,19 +34,18 @@ public class BookStoreApiSteps {
         assertEquals(isbn, actualIsbn, "ISBN книги не совпадает");
     }
 
-    public static void deleteBookFromProfile(String isbn) {
+    public static void deleteBookFromProfile(LoginResponse loginResponse, String isbn) {
         DeleteBookRequest request = new DeleteBookRequest(
-                LoginExtension.loginResponse.getUserID(),
+                loginResponse.getUserID(),
                 isbn
         );
 
         given(requestSpec)
-                .header("Authorization", "Bearer " + LoginExtension.loginResponse.getToken())
+                .header("Authorization", "Bearer " + loginResponse.getToken())
                 .body(request)
                 .when()
                 .delete("/BookStore/v1/Book")
                 .then()
-                .spec(responseSpec(204))
-                .extract().response();
+                .spec(responseSpec(204));
     }
 }

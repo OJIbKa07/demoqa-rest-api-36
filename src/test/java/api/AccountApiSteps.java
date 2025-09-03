@@ -1,25 +1,44 @@
 package api;
 
 import helpers.LoginExtension;
-import org.openqa.selenium.Cookie;
+import io.restassured.response.Response;
+import models.LoginRequest;
+import models.LoginResponse;
 
-
-import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static io.restassured.RestAssured.given;
+import static specs.BaseSpecs.requestSpec;
+import static specs.BaseSpecs.responseSpec;
+import static tests.TestData.PASSWORD;
+import static tests.TestData.USERNAME;
 
 public class AccountApiSteps {
 
-    public static void loginWithApi() {
-        if (LoginExtension.loginResponse == null
-                || LoginExtension.loginResponse.getStatusCode() != 200
-                || LoginExtension.loginResponse.getToken() == null) {
-            throw new RuntimeException("Авторизация не удалась");
+    public static LoginResponse loginWithApi() {
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUserName(USERNAME);
+        loginRequest.setPassword(PASSWORD);
+
+        Response response = given()
+                .spec(requestSpec)
+                .body(loginRequest)
+                .post("/Account/v1/Login")
+                .then()
+                .extract().response();
+
+        System.out.println("Login response status: " + response.statusCode());
+        System.out.println("Login response body: " + response.asString());
+
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setStatusCode(response.getStatusCode());
+
+        if (response.statusCode() == 200) {
+            loginResponse.setToken(response.jsonPath().getString("token"));
+            loginResponse.setUserID(response.jsonPath().getString("userId"));
+            loginResponse.setExpires(response.jsonPath().getString("expires"));
+        } else {
+            throw new RuntimeException("Авторизация не удалась: " + response.asString());
         }
 
-        open("/favicon.ico");
-
-        getWebDriver().manage().addCookie(new Cookie("userID", LoginExtension.loginResponse.getUserID()));
-        getWebDriver().manage().addCookie(new Cookie("expires", LoginExtension.loginResponse.getExpires()));
-        getWebDriver().manage().addCookie(new Cookie("token", LoginExtension.loginResponse.getToken()));
+        return loginResponse;
     }
 }

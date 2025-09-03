@@ -5,6 +5,7 @@ import api.BookStoreApiSteps;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
+import models.LoginResponse;
 
 
 import static com.codeborne.selenide.Condition.*;
@@ -40,9 +41,8 @@ public class ProfilePage {
     }
 
     @Step("Удаляем книги из корзины по API")
-    public ProfilePage deleteBook(String isbn) {
-        BookStoreApiSteps.deleteBookFromProfile(isbn);
-
+    public ProfilePage deleteBook(LoginResponse loginResponse, String isbn) {
+        BookStoreApiSteps.deleteBookFromProfile(loginResponse, isbn);
         return this;
     }
 
