@@ -1,6 +1,5 @@
 package api;
 
-import helpers.LoginExtension;
 import io.restassured.response.Response;
 import models.LoginRequest;
 import models.LoginResponse;
@@ -23,10 +22,8 @@ public class AccountApiSteps {
                 .body(loginRequest)
                 .post("/Account/v1/Login")
                 .then()
+                .spec(responseSpec(200))
                 .extract().response();
-
-        System.out.println("Login response status: " + response.statusCode());
-        System.out.println("Login response body: " + response.asString());
 
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setStatusCode(response.getStatusCode());

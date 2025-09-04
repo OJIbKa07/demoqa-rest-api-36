@@ -18,7 +18,7 @@ public class LoginExtension implements BeforeEachCallback {
         open("/favicon.ico");
         getWebDriver().manage().addCookie(new Cookie("token", loginResponse.getToken()));
         getWebDriver().manage().addCookie(new Cookie("userID", loginResponse.getUserID()));
-        getWebDriver().manage().addCookie(new Cookie("expires", loginResponse.getExpires()));
+        //getWebDriver().manage().addCookie(new Cookie("expires", loginResponse.getExpires()));
     }
 }
 
