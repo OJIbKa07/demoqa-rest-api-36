@@ -1,5 +1,6 @@
 package tests;
 
+import api.AccountApiSteps;
 import helpers.WithLogin;
 import helpers.LoginExtension;
 import models.LoginResponse;
@@ -18,13 +19,9 @@ public class DemoqaTestsAPI extends TestBase {
     LoginResponse loginResponse;
 
     @WithLogin
-    @BeforeEach
-    void setUpLogin() {
-        loginResponse = LoginExtension.loginResponse;
-    }
-
     @Test
     void deleteBookTest() {
+        loginResponse = AccountApiSteps.loginWithApi();
         step("Проверка успешной авторизации", () -> {
             profilePage
                     .openPage()
