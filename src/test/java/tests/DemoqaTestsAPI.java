@@ -1,7 +1,7 @@
 package tests;
 
-import api.AccountApiSteps;
 import helpers.WithLogin;
+import helpers.LoginExtension;
 import models.LoginResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ public class DemoqaTestsAPI extends TestBase {
     @WithLogin
     @BeforeEach
     void setUpLogin() {
-        loginResponse = AccountApiSteps.loginWithApi();
+        loginResponse = LoginExtension.loginResponse;
     }
 
     @Test

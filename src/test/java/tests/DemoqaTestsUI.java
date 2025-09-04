@@ -25,7 +25,6 @@ public class DemoqaTestsUI extends TestBase {
 
     @Test
     void deleteBookTest() {
-        LoginResponse loginResponse = AccountApiSteps.loginWithApi();
         step("Проверка успешной авторизации", () -> {
             profilePage
                     .openPage()
